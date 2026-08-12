@@ -1,0 +1,60 @@
+import math
+
+study_hours = [1, 2, 3, 4, 5]
+actual_result = [0, 0, 0, 1, 1]
+
+# Logistic Regression parameters
+w = 1
+b = -3
+
+# Sigmoid function
+def sigmoid(z):
+    return 1 / (1 + math.exp(-z))
+
+
+predicted_result = []
+probabilities = []
+
+# Make predictions
+for x in study_hours:
+
+    # Linear equation
+    z = w * x + b
+
+    # Calculate probability
+    probability = sigmoid(z)
+
+    # Decision boundary
+    if probability >= 0.5:
+        prediction = 1
+    else:
+        prediction = 0
+
+    probabilities.append(probability)
+    predicted_result.append(prediction)
+
+
+# Display results
+print("Student\tStudy Hours\tActual\tProbability\tPredicted")
+
+for i in range(len(study_hours)):
+    print(
+        f"S{i+1}\t{study_hours[i]}\t\t"
+        f"{actual_result[i]}\t"
+        f"{probabilities[i]:.3f}\t\t"
+        f"{predicted_result[i]}"
+    )
+
+
+# Calculate accuracy
+correct = 0
+
+for i in range(len(actual_result)):
+    if actual_result[i] == predicted_result[i]:
+        correct += 1
+
+accuracy = (correct / len(actual_result)) * 100
+
+print("\nCorrect Predictions:", correct)
+print("Total Instances:", len(actual_result))
+print("Accuracy:", accuracy, "%")
